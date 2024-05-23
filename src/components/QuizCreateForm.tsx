@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { QuizType } from '../types/QuizType';
 import { QuestionsType } from '../types/QuestionsType';
 
 type Props = {
-  quizs: QuizType[]
+  onAddQuiz: (quiz: Omit<QuizType, 'id'>) => void
 }
 
-const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
+const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
   const [addQuestion, setAddQuestion] = useState(false);
   const [quizName, setQuizName] = useState('');
   const [detail, setDetail] = useState('');
@@ -15,24 +15,15 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
   const [options, setOptions] = useState('');
   const [store, setStore] = useState<string[]>([]);
   const [storeQuestions, setStoreQuestions] = useState<QuestionsType[]>([]);
-  const [localQuizes, setLocalQuizes] = useState<QuizType[]>(quizs);
-
-  useEffect(() => {
-    const savedQuizzes = JSON.parse(localStorage.getItem('quizes') || '[]');
-    setLocalQuizes(savedQuizzes);
-  }, []);
 
   const createQuiz = () => {
     const newQuiz = {
-      id: localQuizes.length + 1,
       name: quizName,
       details: detail,
       quizbar: storeQuestions,
     };
 
-    const updatedQuizzes = [...localQuizes, newQuiz];
-    localStorage.setItem('quizes', JSON.stringify(updatedQuizzes));
-    setLocalQuizes(updatedQuizzes);
+    onAddQuiz(newQuiz);
     setQuizName('');
     setDetail('');
     setStore([]);
@@ -91,16 +82,9 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
           <button 
             type="button" 
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            onClick={() => setAddQuestion(!addQuestion)}
+            onClick={() => setAddQuestion(true)}
           >
             Створити запитання
-          </button>
-
-          <button 
-            type="button" 
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          >
-            Видалити
           </button>
 
           <button 
@@ -118,9 +102,15 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
           <form className="space-y-4">
             <ul>
               {storeQuestions.map(el => (
-                <li key={el.id}>
-                  <p>{el.answer}</p> 
-                  <button type='button' onClick={() => setStoreQuestions(storeQuestions.filter(item => item.id !== el.id))}>Видалити</button>
+                <li key={el.id} className='flex justify-between mb-2 p-1 bg-white rounded-md shadow-md items-center'>
+                  <p>{el.question}</p> 
+                  <button 
+                    type='button' 
+                    onClick={() => setStoreQuestions(storeQuestions.filter(item => item.id !== el.id))}
+                    className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
+                  >
+                    Видалити
+                  </button>
                 </li>
               ))}
             </ul>
@@ -151,9 +141,16 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
 
             <ul>
               {store.map(el => (
-                <li key={el}>
+                <li key={el} className='flex justify-between mb-2 p-1 bg-white rounded-md shadow-md items-center'>
                   <p>{el}</p> 
-                  <button type='button' onClick={() => setStore(store.filter(item => item !== el))}>Видалити</button>
+                  <button 
+                    type='button' 
+                    onClick={() => 
+                    setStore(store.filter(item => item !== el))}
+                    className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
+                  >
+                    Видалити
+                  </button>
                 </li>
               ))}
             </ul>
@@ -175,10 +172,10 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               onClick={() => addItemToStore(options)}
             >
-              Додати ще варіант
+              Додати опцію
             </button>
 
-            <div className="flex justify-between">
+            <div className="flex gap-10">
               <button 
                 type="button" 
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -190,6 +187,7 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
               <button 
                 type="button" 
                 className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                onClick={() => {setQuest(''); setOptions(''); setAnswer('')}}
               >
                 Очистити
               </button>
@@ -197,6 +195,7 @@ const QuizCreateForm: React.FC<Props> = ({ quizs }) => {
               <button 
                 type="button" 
                 className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                onClick={() => setAddQuestion(false)}
               >
                 Відмінити
               </button>

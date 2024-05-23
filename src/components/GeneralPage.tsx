@@ -5,24 +5,59 @@ import { QuizType } from '../types/QuizType';
 
 const GeneralPage = () => {
   const [buttonAdd, setButtonAdd] = useState(false);
-  const [quizs, setQuizs] = useState<QuizType[]>([]);
+  const [quizes, setQuizes] = useState<QuizType[]>([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    const quizsString = localStorage.getItem('quizes');
-
-    if (quizsString) {
-        const parsedQuizs = JSON.parse(quizsString);
-        setQuizs(parsedQuizs);
+    const quizzesString = localStorage.getItem('quizes');
+    if (quizzesString) {
+        const parsedQuizzes = JSON.parse(quizzesString);
+        setQuizes(parsedQuizzes);
     }
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('quizes', JSON.stringify(quizes));
+  }, [quizes]);
+
+  const handleQuizAdd = (quiz: Omit<QuizType, 'id'>) => {
+    const newQuiz = {
+      ...quiz,
+      id: quizes.length + 1,
+    };
+    const updatedQuizzes = [...quizes, newQuiz];
+    setQuizes(updatedQuizzes);
+  };
+
+  const handleQuizUpdate = (updatedQuiz: QuizType) => {
+    const updatedQuizzes = quizes.map((quiz) =>
+      quiz.id === updatedQuiz.id ? updatedQuiz : quiz
+    );
+    setQuizes(updatedQuizzes);
+  };
+
+  const handleQuizDelete = (id: number) => {
+    const filterQuiz = quizes.filter(el => el.id !== id);
+    setQuizes(filterQuiz);
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredQuizzes = quizes.filter(quiz =>
+    quiz.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className='flex flex-col gap-5 m-5 '>
+    <div className='flex flex-col gap-5 m-5'>
       <div className='flex flex-col sm:flex-row sm:items-center gap-4 mb-5'>
         <h1 className='text-2xl font-bold'>Test Quiz app</h1>
         <input 
           type="text" 
-          placeholder='search' 
+          placeholder='Пошук квізу' 
+          value={search}
+          onChange={handleSearchChange}
           className='border border-gray-300 rounded p-2 w-100'
         />
         <button 
@@ -40,12 +75,16 @@ const GeneralPage = () => {
           </button>
         )}
       </div>
-      <div className='flex gap-10'> 
-        <QuizList quizs={quizs} />
-        {buttonAdd && <QuizCreateForm quizs={quizs}/>}
+      <div className='flex gap-10'>
+        <QuizList 
+          quizes={filteredQuizzes} 
+          onQuizUpdate={handleQuizUpdate} 
+          handleQuizDelete={handleQuizDelete}
+        />
+        {buttonAdd && <QuizCreateForm onAddQuiz={handleQuizAdd}/>}
       </div>
     </div>
   );
-}
+};
 
 export default GeneralPage;
