@@ -1,5 +1,6 @@
 {
   "name": "quiz-test",
+  "homepage": "https://romanostrous.github.io/quiz-test/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
