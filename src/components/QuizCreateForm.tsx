@@ -52,7 +52,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
   };
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md max-h-min-content">
+    <div className="p-4 bg-white shadow-md rounded-md max-h-min-content w-[500px] mb-6">
       <form className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="quizName" className="text-sm font-medium text-gray-700">Quiz Name:</label>
@@ -100,14 +100,14 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
       {addQuestion && (
         <div className="mx-auto p-4 bg-white shadow-md rounded-md mt-10">
           <form className="space-y-4">
-            <ul>
+            <ul className="space-y-2">
               {storeQuestions.map(el => (
-                <li key={el.id} className='flex justify-between mb-2 p-1 bg-white rounded-md shadow-md items-center'>
+                <li key={el.id} className="flex justify-between mb-2 p-1 bg-gray-50 rounded-md shadow-md items-center">
                   <p>{el.question}</p> 
                   <button 
-                    type='button' 
+                    type="button" 
                     onClick={() => setStoreQuestions(storeQuestions.filter(item => item.id !== el.id))}
-                    className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
+                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                   >
                     Видалити
                   </button>
@@ -120,7 +120,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
               <input 
                 type="text" 
                 id="question" 
-                name='question'
+                name="question"
                 value={quest}
                 onChange={(e) => setQuest(e.target.value)}  
                 className="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500" 
@@ -132,22 +132,21 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
               <input 
                 type="text" 
                 id="answer" 
-                name='answer' 
+                name="answer" 
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
                 className="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
-            <ul>
+            <ul className="space-y-2">
               {store.map(el => (
-                <li key={el} className='flex justify-between mb-2 p-1 bg-white rounded-md shadow-md items-center'>
+                <li key={el} className="flex justify-between mb-2 p-1 bg-gray-50 rounded-md shadow-md items-center">
                   <p>{el}</p> 
                   <button 
-                    type='button' 
-                    onClick={() => 
-                    setStore(store.filter(item => item !== el))}
-                    className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
+                    type="button" 
+                    onClick={() => setStore(store.filter(item => item !== el))}
+                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                   >
                     Видалити
                   </button>
@@ -160,7 +159,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
               <input 
                 type="text"
                 id="option"
-                name='option'
+                name="option"
                 value={options}
                 onChange={(e) => setOptions(e.target.value)}
                 className="mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
@@ -175,7 +174,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
               Додати опцію
             </button>
 
-            <div className="flex gap-10">
+            <div className="flex gap-4 justify-between">
               <button 
                 type="button" 
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -187,7 +186,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
               <button 
                 type="button" 
                 className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                onClick={() => {setQuest(''); setOptions(''); setAnswer('')}}
+                onClick={() => { setQuest(''); setOptions(''); setAnswer('') }}
               >
                 Очистити
               </button>

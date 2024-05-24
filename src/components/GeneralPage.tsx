@@ -50,38 +50,44 @@ const GeneralPage = () => {
   );
 
   return (
-    <div className='flex flex-col gap-5 m-5'>
+    <div className='flex flex-col items-center justify-center gap-5 m-5'>
       <div className='flex flex-col sm:flex-row sm:items-center gap-4 mb-5'>
-        <h1 className='text-2xl font-bold'>Test Quiz app</h1>
+        <h1 className='text-2xl font-bold'>Test Quiz App</h1>
         <input 
           type="text" 
           placeholder='Пошук квізу' 
           value={search}
           onChange={handleSearchChange}
-          className='border border-gray-300 rounded p-2 w-100'
+          className='border border-gray-300 rounded p-2 w-full sm:w-auto'
         />
-        <button 
-          onClick={() => setButtonAdd(true)} 
-          className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600'
-        >
-          Додати Квіз
-        </button>
-        {buttonAdd && (
+        <div className='flex gap-2'>
           <button 
-            onClick={() => setButtonAdd(false)} 
-            className='bg-red-500 text-white p-2 rounded hover:bg-red-600'
+            onClick={() => setButtonAdd(true)} 
+            className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600'
           >
-            Скасувати
+            Додати Квіз
           </button>
-        )}
+          {buttonAdd && (
+            <button 
+              onClick={() => setButtonAdd(false)} 
+              className='bg-red-500 text-white p-2 rounded hover:bg-red-600'
+            >
+              Скасувати
+            </button>
+          )}
+        </div>
       </div>
-      <div className='flex gap-10'>
+      <div className='flex flex-col sm:flex-row gap-10'>
         <QuizList 
           quizes={filteredQuizzes} 
           onQuizUpdate={handleQuizUpdate} 
           handleQuizDelete={handleQuizDelete}
         />
-        {buttonAdd && <QuizCreateForm onAddQuiz={handleQuizAdd}/>}
+        {buttonAdd && (
+          <div className='flex justify-center items-start'>
+            <QuizCreateForm onAddQuiz={handleQuizAdd} />
+          </div>
+        )}
       </div>
     </div>
   );

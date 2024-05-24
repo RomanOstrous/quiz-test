@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { QuizType } from '../types/QuizType';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   quiz: QuizType;
@@ -14,6 +15,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
   const [answer, setAnswer] = useState('');
   const [option, setOption] = useState('');
   const [optionsState, setOptionsState] = useState<string[]>([]);
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (editQuestionId !== null) {
@@ -69,13 +71,13 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
   };
 
   return (
-    <div className="border border-gray-300 bg-white rounded p-4">
+    <div className="border border-gray-300 bg-white rounded p-4 w-[500px] mb-6 shadow-sm">
       <div className="mb-2">
-        <p className="font-semibold">{quiz.name}</p>
-        <p>{quiz.details}</p>
+        <p className="font-semibold text-lg">{quiz.name}</p>
+        <p className="text-gray-600">{quiz.details}</p>
       </div>
       
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-between mb-4">
         <button 
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           onClick={() => handleQuizDelete(quiz.id)}
@@ -92,13 +94,14 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
 
         <button 
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          onClick={()=> navigate(`/quiz/${quiz.id}`)}
         >
           Розпочати
         </button>
       </div>
 
       {edit && (
-        <ul className="mt-4">
+        <ul className="mt-5 space-y-3">
           <li className="flex items-center mb-2">
             <input 
               type="text" 
@@ -116,9 +119,9 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
           </li>
 
           {quiz.quizbar.map((el) => (
-            <div key={el.id} className="mb-4">
+            <div key={el.id} className="bg-gray-50 border border-gray-200 rounded p-4">
               <li className="mb-2">{el.question}</li>
-              <div className="flex gap-2">
+              <div className="flex gap-2 justify-between mb-2">
                 <button 
                   className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                   onClick={() => deleteQuestion(el.id)}
@@ -143,17 +146,20 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
 
               {editQuestionId === el.id && (
                 <div className="mt-2">
-                  <p className="font-semibold">Правильна відповідь:</p>
-                  <input 
-                    type="text" 
-                    name="Answer" 
-                    value={answer} 
-                    onChange={(e) => setAnswer(e.target.value)}
-                    className="border border-gray-300 rounded px-2 py-1 mb-2"
-                  />
-                  <ul>
+                  <div className="mt-2 flex justify-between items-center">
+                    <p className="font-semibold">Правильна відповідь:</p>
+                    <input 
+                      type="text" 
+                      name="Answer" 
+                      value={answer} 
+                      onChange={(e) => setAnswer(e.target.value)}
+                      className="border border-gray-300 rounded px-2 py-1 mb-2"
+                    />
+                  </div>
+ 
+                  <ul className="space-y-2">
                     {optionsState.map((option, index) => (
-                      <li key={index} className="flex items-center mb-2">
+                      <li key={index} className="flex items-center justify-between">
                         {option}
                         <button 
                           className="px-2 py-1 ml-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -168,7 +174,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                       <input 
                         type="text" 
                         name="Add option" 
-                        className="border border-gray-300 rounded px-2 py-1 mr-2"
+                        className="border border-gray-300 rounded px-2 py-1 mr-2 flex-grow"
                         value={option}
                         onChange={(e) => setOption(e.target.value)} 
                       />
