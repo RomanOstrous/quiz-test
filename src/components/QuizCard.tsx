@@ -15,8 +15,9 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
   const [answer, setAnswer] = useState('');
   const [option, setOption] = useState('');
   const [optionsState, setOptionsState] = useState<string[]>([]);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (editQuestionId !== null) {
       const selectedQuestion = quiz.quizbar.find(el => el.id === editQuestionId);
@@ -28,6 +29,11 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
   }, [editQuestionId, quiz.quizbar]);
 
   const addQuestion = () => {
+    if (!question.trim()) {
+      setErrors(prev => ({ ...prev, question: 'Question cannot be empty' }));
+      return;
+    }
+
     const newQuestion = {
       id: quiz.quizbar.length + 1,
       question: question,
@@ -40,6 +46,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
 
     onQuizUpdate(updatedQuiz);
     setQuestion('');
+    setErrors(prev => ({ ...prev, question: '' }));
   };
 
   const deleteQuestion = (id: number) => {
@@ -49,6 +56,15 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
   };
 
   const saveQuestion = (id: number) => {
+    if (!answer.trim()) {
+      setErrors(prev => ({ ...prev, answer: 'Answer cannot be empty' }));
+      return;
+    }
+    if (optionsState.length < 2) {
+      setErrors(prev => ({ ...prev, options: 'At least two options are required' }));
+      return;
+    }
+
     const updatedQuizbar = quiz.quizbar.map(el =>
       el.id === id ? { ...el, answer, options: optionsState } : el
     );
@@ -57,13 +73,17 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
     setEditQuestionId(null);
     setOption('');
     setOptionsState([]);
+    setErrors({});
   };
 
   const addOption = () => {
-    if (option.trim() !== '') {
-      setOptionsState(prev => [...prev, option]);
-      setOption('');
+    if (!option.trim()) {
+      setErrors(prev => ({ ...prev, option: 'Option cannot be empty' }));
+      return;
     }
+    setOptionsState(prev => [...prev, option]);
+    setOption('');
+    setErrors(prev => ({ ...prev, option: '' }));
   };
 
   const deleteOption = (index: number) => {
@@ -94,7 +114,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
 
         <button 
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-          onClick={()=> navigate(`/quiz/${quiz.id}`)}
+          onClick={() => navigate(`/quiz/${quiz.id}`)}
         >
           Start
         </button>
@@ -107,7 +127,10 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
               type="text" 
               name="Add question" 
               value={question} 
-              onChange={(e) => setQuestion(e.target.value)}
+              onChange={(e) => {
+                setQuestion(e.target.value);
+                setErrors(prev => ({ ...prev, question: '' }));
+              }}
               className="border border-gray-300 rounded px-2 py-1 mr-2 flex-grow"
             />
             <button 
@@ -117,6 +140,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
               Add question
             </button>
           </li>
+          {errors.question && <p className="text-red-500 text-sm">{errors.question}</p>}
 
           {quiz.quizbar.map((el) => (
             <div key={el.id} className="bg-gray-50 border border-gray-200 rounded p-4">
@@ -152,11 +176,15 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                       type="text" 
                       name="Answer" 
                       value={answer} 
-                      onChange={(e) => setAnswer(e.target.value)}
+                      onChange={(e) => {
+                        setAnswer(e.target.value);
+                        setErrors(prev => ({ ...prev, answer: '' }));
+                      }}
                       className="border border-gray-300 rounded px-2 py-1 mb-2"
                     />
                   </div>
- 
+                  {errors.answer && <p className="text-red-500 text-sm">{errors.answer}</p>}
+
                   <ul className="space-y-2">
                     {optionsState.map((option, index) => (
                       <li key={index} className="flex items-center justify-between">
@@ -176,7 +204,10 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                         name="Add option" 
                         className="border border-gray-300 rounded px-2 py-1 mr-2 flex-grow"
                         value={option}
-                        onChange={(e) => setOption(e.target.value)} 
+                        onChange={(e) => {
+                          setOption(e.target.value);
+                          setErrors(prev => ({ ...prev, option: '' }));
+                        }} 
                       />
                       <button 
                         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -185,7 +216,9 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                         Add option
                       </button>
                     </li>
+                    {errors.option && <p className="text-red-500 text-sm">{errors.option}</p>}
                   </ul>
+                  {errors.options && <p className="text-red-500 text-sm">{errors.options}</p>}
                 </div>
               )}
             </div>

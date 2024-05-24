@@ -1,46 +1,116 @@
-# Getting Started with Create React App
+# Quiz Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a Quiz Application built with React and Tailwind CSS. The application allows users to create, edit, delete, and search for quizzes. Each quiz can have multiple questions with one options.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Add, edit, delete quizzes
+- Add, edit, delete questions within a quiz
+- Add, edit, delete options for each question
+- Search for quizzes
+- Take quizzes with a timer
+- Display results at the end of a quiz
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- TypeScript
+- Tailwind CSS
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Before you begin, ensure you have Node.js and npm installed on your machine. You can download Node.js and npm from [here](https://nodejs.org/).
+Use node v20.11.1
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    ```bash
+    git clone https://github.com/your-username/quiz-application.git
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Navigate to the project directory:
 
-### `npm run eject`
+    ```bash
+    cd quiz-application
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Install the dependencies:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ```bash
+    npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Running the Application
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To start the application, run:
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Open the app in your web browser by navigating to http://localhost:3000.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project Structure
+
+The project is structured as follows:
+
+```java
+quiz-application/
+│
+├── public/               # Static files
+├── src/                  # Source files
+│   ├── components/       # React components
+│   │   ├── GeneralPage.tsx
+│   │   ├── QuizCard.tsx
+│   │   ├── QuizCreateForm.tsx
+│   │   └── QuizList.tsx
+│   ├── types/            # TypeScript types
+│   │   └── QuizType.ts
+│   ├── App.tsx
+│   ├── index.css
+│   ├── index.tsx
+│   └── ...               # Other files
+│
+├── tailwind.config.js    # Tailwind CSS configuration
+├── tsconfig.json         # TypeScript configuration
+├── package.json          # Project dependencies and scripts
+└── README.md             # Project documentation
+```
+
+## Usage
+
+### Adding a Quiz
+
+1. Click the "Add quiz" button.
+2. Fill in the quiz name and details.
+3. Click "Create Quiz".
+
+### Editing a Quiz
+
+1. Click the "Edit" button on the quiz card.
+2. Modify the quiz details, questions, or options as needed.
+3. Click "Accept" to save the changes.
+
+### Deleting a Quiz
+
+1. Click the "Remove" button on the quiz card.
+2. Confirm the deletion.
+
+### Searching for Quizzes
+
+- Use the search bar to filter quizzes by name.
+
+### Taking a Quiz
+
+1. Click the "Start" button on the quiz card.
+2. Answer each question within the given time.
+3. Click "Next Question" to move to the next question.
+4. At the end of the quiz, the results will be displayed.
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.

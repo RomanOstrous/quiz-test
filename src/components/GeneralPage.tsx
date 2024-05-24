@@ -7,6 +7,7 @@ const GeneralPage = () => {
   const [buttonAdd, setButtonAdd] = useState(false);
   const [quizes, setQuizes] = useState<QuizType[]>([]);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
 
   useEffect(() => {
     const quizzesString = localStorage.getItem('quizes');
@@ -19,6 +20,16 @@ const GeneralPage = () => {
   useEffect(() => {
     localStorage.setItem('quizes', JSON.stringify(quizes));
   }, [quizes]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search]);
 
   const handleQuizAdd = (quiz: Omit<QuizType, 'id'>) => {
     const newQuiz = {
@@ -39,14 +50,14 @@ const GeneralPage = () => {
   const handleQuizDelete = (id: number) => {
     const filterQuiz = quizes.filter(el => el.id !== id);
     setQuizes(filterQuiz);
-  }
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   const filteredQuizzes = quizes.filter(quiz =>
-    quiz.name.toLowerCase().includes(search.toLowerCase())
+    quiz.name.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
 
   return (
@@ -62,7 +73,10 @@ const GeneralPage = () => {
         />
         <div className='flex gap-2'>
           <button 
-            onClick={() => setButtonAdd(true)} 
+            onClick={() => {
+              setButtonAdd(true);
+              setSearch('');
+            }} 
             className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600'
           >
             Add quiz

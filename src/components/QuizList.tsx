@@ -17,7 +17,7 @@ const QuizList: React.FC<Props> = ({ quizes, onQuizUpdate, handleQuizDelete }) =
     <ul className="divide-gray-200">
       {quizes.map((quiz) => (
         <li key={quiz.id} className="pb-2">
-          <QuizCard quiz={quiz} onQuizUpdate={onQuizUpdate}  handleQuizDelete={handleQuizDelete}/>
+          <QuizCard quiz={quiz} onQuizUpdate={onQuizUpdate} handleQuizDelete={handleQuizDelete}/>
         </li>
       ))}
     </ul>
