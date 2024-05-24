@@ -55,7 +55,7 @@ const GeneralPage = () => {
         <h1 className='text-2xl font-bold'>Test Quiz App</h1>
         <input 
           type="text" 
-          placeholder='Пошук квізу' 
+          placeholder='Quiz search' 
           value={search}
           onChange={handleSearchChange}
           className='border border-gray-300 rounded p-2 w-full sm:w-auto'
@@ -65,14 +65,14 @@ const GeneralPage = () => {
             onClick={() => setButtonAdd(true)} 
             className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600'
           >
-            Додати Квіз
+            Add quiz
           </button>
           {buttonAdd && (
             <button 
               onClick={() => setButtonAdd(false)} 
               className='bg-red-500 text-white p-2 rounded hover:bg-red-600'
             >
-              Скасувати
+              Cancel
             </button>
           )}
         </div>

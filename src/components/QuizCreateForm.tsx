@@ -67,7 +67,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="description" className="text-sm font-medium text-gray-700">Опис:</label>
+          <label htmlFor="description" className="text-sm font-medium text-gray-700">Description:</label>
           <input 
             type="text" 
             id="description" 
@@ -84,7 +84,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
             onClick={() => setAddQuestion(true)}
           >
-            Створити запитання
+            Create a question
           </button>
 
           <button 
@@ -92,7 +92,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
             className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
             onClick={() => createQuiz()}
           >
-            Зберегти
+            Save
           </button>
         </div>
       </form>
@@ -109,7 +109,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
                     onClick={() => setStoreQuestions(storeQuestions.filter(item => item.id !== el.id))}
                     className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                   >
-                    Видалити
+                    Remove
                   </button>
                 </li>
               ))}
@@ -148,7 +148,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
                     onClick={() => setStore(store.filter(item => item !== el))}
                     className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                   >
-                    Видалити
+                    Remove
                   </button>
                 </li>
               ))}
@@ -171,7 +171,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               onClick={() => addItemToStore(options)}
             >
-              Додати опцію
+              Add option
             </button>
 
             <div className="flex gap-4 justify-between">
@@ -180,7 +180,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
                 onClick={() => addQuestionToStore()}
               >
-                Додати Запитання
+                Add question
               </button>
 
               <button 
@@ -188,7 +188,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
                 className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
                 onClick={() => { setQuest(''); setOptions(''); setAnswer('') }}
               >
-                Очистити
+                Clean
               </button>
 
               <button 
@@ -196,7 +196,7 @@ const QuizCreateForm: React.FC<Props> = ({ onAddQuiz}) => {
                 className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                 onClick={() => setAddQuestion(false)}
               >
-                Відмінити
+                Cancel
               </button>
             </div>
           </form>

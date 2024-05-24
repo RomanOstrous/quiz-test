@@ -10,7 +10,7 @@ type Props = {
 
 const QuizList: React.FC<Props> = ({ quizes, onQuizUpdate, handleQuizDelete }) => {
   if (quizes.length === 0) {
-    return <p className="text-center text-gray-500">Список квізів порожній</p>;
+    return <p className="text-center text-gray-500">List Quizs empty!</p>;
   }
 
   return (

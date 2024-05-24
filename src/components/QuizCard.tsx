@@ -82,21 +82,21 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           onClick={() => handleQuizDelete(quiz.id)}
         >
-          Видалити
+          Remove
         </button>
 
         <button 
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" 
           onClick={() => setEdit(!edit)}
         >
-          {edit === false ? <p>Редагувати</p> : <p>Прийняти</p>}
+          {edit === false ? <p>Edit</p> : <p>Accept</p>}
         </button>
 
         <button 
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
           onClick={()=> navigate(`/quiz/${quiz.id}`)}
         >
-          Розпочати
+          Start
         </button>
       </div>
 
@@ -114,7 +114,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" 
               onClick={addQuestion}
             >
-              Додати питання
+              Add question
             </button>
           </li>
 
@@ -126,28 +126,28 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                   className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                   onClick={() => deleteQuestion(el.id)}
                 >
-                  Видалити
+                  Remove
                 </button>
 
                 <button 
                   className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" 
                   onClick={() => setEditQuestionId(el.id)}
                 >
-                  Редагувати
+                  Edit
                 </button>
 
                 <button 
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" 
                   onClick={() => saveQuestion(el.id)}
                 >
-                  Зберегти
+                  Save
                 </button>
               </div>
 
               {editQuestionId === el.id && (
                 <div className="mt-2">
                   <div className="mt-2 flex justify-between items-center">
-                    <p className="font-semibold">Правильна відповідь:</p>
+                    <p className="font-semibold">Right answer:</p>
                     <input 
                       type="text" 
                       name="Answer" 
@@ -165,7 +165,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                           className="px-2 py-1 ml-2 bg-red-500 text-white rounded hover:bg-red-600"
                           onClick={() => deleteOption(index)}
                         >
-                          Видалити
+                          Remove
                         </button>
                       </li>
                     ))}
@@ -182,7 +182,7 @@ const QuizCard: React.FC<Props> = ({ quiz, onQuizUpdate, handleQuizDelete }) => 
                         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         onClick={addOption}
                       >
-                        Додати варіант
+                        Add option
                       </button>
                     </li>
                   </ul>
